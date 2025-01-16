@@ -1,4 +1,17 @@
 services:
+  availability-updater:
+    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0
+    environment:
+      - ONTO_REPO=${ONTO_REPO:-"https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download"}
+      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v3.0.2"}
+      - ONTOLOGY_DIR=${ONTOLOGY_DIR:-"/opt/availability-updater/elastic_ontology"}
+      - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-"true"}
+      - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-"/opt/availability-updater/availability_input"}
+      - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-"/opt/availability-updater/availability_output"}
+      - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-"http://fhir-server:8080"}
+      - ES_BASE_URL=${ES_BASE_URL:-"http://dataportal-elastic:9200"}
+      - ES_INDEX=${ES_INDEX:-"ontology"}
+      - LOGLEVEL=${LOGLEVEL:-"INFO"}
   availability-report-store:
     image: "samply/blaze:0.31"
     environment:
@@ -9,6 +22,41 @@ services:
       - "8082:8080"
     volumes:
       - "avail-report-store-data:/app/data"
+  dataportal-elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    container_name: dataportal-elastic
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+      node.name: es01
+      cluster.name: elasticsearch
+      xpack.security.enabled: false
+    volumes:
+      - type: volume
+        source: dataportal-elastic-data
+        target: /usr/share/elasticsearch/data
+  init-elasticsearch:
+    image: ghcr.io/medizininformatik-initiative/dataportal-es-init:latest
+    depends_on:
+      dataportal-elastic:
+        condition: service_healthy
+    environment:
+      ES_HOST: http://dataportal-elastic
+      ES_PORT: 9200
+      ONTO_GIT_TAG: v3.0.2-alpha
+      ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
+      DOWNLOAD_FILENAME: elastic.zip
+      EXIT_ON_EXISTING_INDICES: false
 
 volumes:
   avail-report-store-data:
+  dataportal-elastic-data:
+    name: "dataportal-elastic-data"

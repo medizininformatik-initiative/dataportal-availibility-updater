@@ -8,6 +8,8 @@ import requests
 
 from ElasticAvailabilityGenerator import ElasticAvailabilityGenerator
 
+def str_to_bool(s):
+    return s.lower() in ["true", "yes", "1"]
 
 def download_and_unzip(url, extract_to):
     local_zip_path = "temp.zip"
@@ -81,16 +83,23 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--onto_repo', type=str)
     parser.add_argument('--onto_git_tag', type=str)
+    parser.add_argument("--update_ontology", help="", type=str_to_bool, default="false")
     parser.add_argument('--ontology_dir', type=str)
     parser.add_argument('--availability_input_dir', type=str)
     parser.add_argument('--availability_output_dir', type=str)
     parser.add_argument('--availability_report_server_base_url', type=str)
     parser.add_argument('--es_base_url', type=str)
     parser.add_argument('--es_index', type=str)
+    parser.add_argument(
+        '--loglevel',
+        default='INFO',
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        help="Set the logging level. Default is INFO."
+    )
     args = parser.parse_args()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=getattr(logging, args.loglevel),
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
 
@@ -98,7 +107,7 @@ if __name__ == '__main__':
     os.makedirs(args.availability_input_dir, exist_ok=True)
     os.makedirs(args.availability_output_dir, exist_ok=True)
 
-    if not os.path.isdir(os.path.join(args.ontology_dir, "elastic")):
+    if args.update_ontology:
         onto_download_url = f'{args.onto_repo}/{args.onto_git_tag}/elastic.zip'
         download_and_unzip(onto_download_url, args.ontology_dir)
 
@@ -106,5 +115,6 @@ if __name__ == '__main__':
 
     es_avail_generator = ElasticAvailabilityGenerator(args.availability_input_dir, args.availability_output_dir,
                                                       args.ontology_dir)
+
     es_avail_generator.generate_availability()
     update_availability_in_es(args.es_base_url, args.es_index, args.availability_output_dir)
