@@ -1,6 +1,6 @@
 services:
   availability-updater:
-    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0
+    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-test
     environment:
       - ONTO_REPO=${ONTO_REPO:-"https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download"}
       - ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v3.0.2"}
@@ -22,9 +22,9 @@ services:
       - "8082:8080"
     volumes:
       - "avail-report-store-data:/app/data"
-  dataportal-elastic:
+  availability-dataportal-elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
-    container_name: dataportal-elastic
+    container_name: availability-dataportal-elastic
     ports:
       - '9200:9200'
       - '9300:9300'
@@ -41,12 +41,12 @@ services:
       xpack.security.enabled: false
     volumes:
       - type: volume
-        source: dataportal-elastic-data
+        source: avail-dataportal-elastic-data
         target: /usr/share/elasticsearch/data
-  init-elasticsearch:
+  availability-init-elasticsearch:
     image: ghcr.io/medizininformatik-initiative/dataportal-es-init:latest
     depends_on:
-      dataportal-elastic:
+      availability-dataportal-elastic:
         condition: service_healthy
     environment:
       ES_HOST: http://dataportal-elastic
@@ -58,5 +58,5 @@ services:
 
 volumes:
   avail-report-store-data:
-  dataportal-elastic-data:
-    name: "dataportal-elastic-data"
+  avail-dataportal-elastic-data:
+    name: "avail-dataportal-elastic-data"

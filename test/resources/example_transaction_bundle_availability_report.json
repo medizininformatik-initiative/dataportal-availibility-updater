@@ -1,0 +1,3168 @@
+{
+  "entry": [
+    {
+      "request": {
+        "method": "PUT",
+        "url": "DocumentReference/f573fbcb-433b-41c2-9f73-db773ded2171"
+      },
+      "resource": {
+        "date": "2024-10-29T09:39:54.839Z",
+        "docStatus": "final",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://dsf.dev/sid/organization-identifier",
+              "value": "mr-g-diz"
+            },
+            "type": "Organization"
+          }
+        ],
+        "id": "f573fbcb-433b-41c2-9f73-db773ded2171",
+        "masterIdentifier": {
+          "system": "http://medizininformatik-initiative.de/sid/project-identifier",
+          "value": "fdpg-availability-report"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "application/fhir+xml",
+              "url": "urn::uuid:298d8b74-cc4b-4c0a-a816-6f7d63951ef2"
+            }
+          }
+        ],
+        "resourceType": "DocumentReference",
+        "status": "current"
+      },
+      "fullUrl": "urn::uuid:dd8353d9-8010-4d2f-b340-260fd65452fa"
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "MeasureReport"
+      },
+      "resource": {
+        "extension": [
+          {
+            "url": "http://fhir-evaluator/StructureDefinition/eval-duration",
+            "valueQuantity": {
+              "unit": "u",
+              "system": "http://unitsofmeasure.org",
+              "code": "s",
+              "value": 2.870653916
+            }
+          }
+        ],
+        "resourceType": "MeasureReport",
+        "group": [
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "procedure-ops-code"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "procedure-sct-code"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "specimen-type-sct-code"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "specimen-bodysite-sct-code"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "specimen-bodysite-icdo3-code"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-death-reason-icd10-code"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-patientendaten-erheben,-speichern,-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-idat-erheben"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-idat-speichern,-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-idat-zusammenfuehren-dritte"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-idat-bereitstellen-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-erheben"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-speichern,-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-wissenschaftlich-nutzen-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-zusammenfuehren-dritte"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-ergebnisse-erheblicher-bedeutung"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-patientendaten-retrospektiv-verarbeiten,-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-retrospektiv-speichern-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-retrospektiv-wissenschaftlich-nutzen-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-retrospektiv-zusammenfuehren-dritte"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-patientendaten-weitergabe-non-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-bereitstellen-non-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-krankenkassendaten-retrospektiv-uebertragen,-speichern,-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-retrospektiv-uebertragen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-retrospektiv-speichern-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-retrospektiv-wissenschaftlich-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-retrospektiv-uebertragen-kvnr"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-prospektiv-uebertragen-speichern-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-prospektiv-uebertragen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-prospektiv-speichern-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-prospektiv-wissenschaftlich-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-kkdat-5j-prospektiv-uebertragen-kvnr"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomaterial-erheben,-lagern,-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-erheben"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-lagern-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-eigentum-übertragen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-wissenschaftlich-nutzen-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-analysedaten-zusammenfuehren-dritte"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomaterial-zusatzentnahme"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-zusatzmengen-entnehmen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomaterial-retrospektiv-speichern,-nutzen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-retrospektiv-lagern-verarbeiten"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-retrospektiv-wissenschaftlich-nutzen-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-retrospektiv-analysedaten-zusammenfuehren-dritte"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomaterial-weitergabe-non-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-biomat-bereitstellen-ohne-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-ergänzungen"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-verknüpfung-datenbanken"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-weitere-erhebung"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-weitere-studien"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-zusatzbefund"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-rekontaktierung-zusatzbefund"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-z1-gecco83-nutzung-num/codex"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-komplettieren-einmalig"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-erheben"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-bereitstellen-num/codex"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-speichern-verarbeiten-num/codex"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-wissenschaftlich-nutzen-covid-19-forschung-eu-dsgvo-konform"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-wissenschaftlich-nutzen-pandemie-forschung-eu-dsgvo-konform"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-wissenschaftlich-nutzen-num/codex-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-z1-gecco83-weitergabe-num/codex-non-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "consent-mdat-gecco83-bereitstellen-num/codex-ohne-eu-dsgvo-niveau"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medication-statement-medication-code-pzn"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medication-statement-medication-code-atc"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medicationadministration-medication-code-pzn"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medicationadministration-medication-code-atc"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "observation-vitalstatus-loinc-code"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "observation-vitalstatus-value"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "patient-pseudonymised-birthdate-exists"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "patient-pseudonymised-gender"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medication-request-medication-code-pzn"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "medication-request-medication-code-atc"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 0
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "patient-birthdate-exists"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "code": "true"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-data-evaluator/strat/system",
+                        "code": "patient-gender"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "code": "female"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 6290
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 6290
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 6290
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 6290
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "code": "male"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 5750
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 5750
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 5750
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 5750
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 12040
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 12040
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 12040
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 12040
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-icd10-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I95.0"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 10796
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 10804
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 10804
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 10804
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I60.1"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I22.8"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "F73.1"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 1000
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 1000
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 1000
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 1000
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I48.0"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 108
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 108
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 108
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 108
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I48.1"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 140
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 140
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 140
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 140
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                          "code": "I50.14"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-sct-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-alhpaid-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-orphanet-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "condition-icdo3-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12072
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 12040
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 12072
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 12072
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 12072
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "observation-lab-loinc-code"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://loinc.org",
+                          "code": "10336-6"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 1004
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 1004
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 1004
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 1004
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://loinc.org",
+                          "code": "33762-6"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 11040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 11164
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 11164
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 11164
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "observation-lab-interpretation"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12168
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12168
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12168
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 12040
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 12168
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 12168
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 12168
+              }
+            ]
+          },
+          {
+            "stratifier": [
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "encounter-type-contact-level"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "encounter-type-contact-type"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "encounter-class-coding"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "encounter-servicetype-coding-fachabteilung"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0600",
+                          "display": "Endokrinologie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 32
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 32
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 32
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0500",
+                          "display": "Haematologie und internistische Onkologie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0700",
+                          "display": "Gastroenterologie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12096
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12096
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12096
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0200",
+                          "display": "Geriatrie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0100",
+                          "display": "Innere Medizin"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "0300",
+                          "display": "Kardiologie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 12040
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "3200",
+                          "display": "Nuklearmedizin"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  },
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel",
+                          "code": "2100",
+                          "display": "Herzchirurgie"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 4
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 4
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "code": [
+                  {
+                    "coding": [
+                      {
+                        "system": "http://fhir-evaluator/strat/system",
+                        "code": "encounter-servicetype-coding-fachabteilung-erweitert"
+                      }
+                    ]
+                  }
+                ],
+                "stratum": [
+                  {
+                    "value": {
+                      "coding": [
+                        {
+                          "system": "http://fhir-evaluator/strat/system",
+                          "code": "fail-no-value-found",
+                          "display": "Expected one value, but found none"
+                        }
+                      ]
+                    },
+                    "measureScore": {
+                      "value": 12040
+                    },
+                    "population": [
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "initial-population",
+                              "display": "display"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-population"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      },
+                      {
+                        "code": {
+                          "coding": [
+                            {
+                              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                              "code": "measure-observation"
+                            }
+                          ]
+                        },
+                        "count": 24192
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "measureScore": {
+              "value": 12040
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "initial-population",
+                      "display": "display"
+                    }
+                  ]
+                },
+                "count": 24192
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population"
+                    }
+                  ]
+                },
+                "count": 24192
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-observation"
+                    }
+                  ]
+                },
+                "count": 24192
+              }
+            ]
+          }
+        ]
+      },
+      "fullUrl": "urn::uuid:298d8b74-cc4b-4c0a-a816-6f7d63951ef2"
+    }
+  ],
+  "type": "transaction",
+  "resourceType": "Bundle"
+}
