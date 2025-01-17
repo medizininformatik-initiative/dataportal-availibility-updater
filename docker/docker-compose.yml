@@ -1,6 +1,6 @@
 services:
   availability-updater:
-    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-test
+    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-alpha
     environment:
       - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
       - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v3.0.2-alpha}
@@ -49,7 +49,7 @@ services:
       availability-dataportal-elastic:
         condition: service_healthy
     environment:
-      ES_HOST: http://dataportal-elastic
+      ES_HOST: http://availability-dataportal-elastic
       ES_PORT: 9200
       ONTO_GIT_TAG: v3.0.2-alpha
       ONTO_REPO: https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download
