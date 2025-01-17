@@ -9,7 +9,8 @@ AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-"/default/output/dir"}
 AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-"https://availability-report-server"}
 ES_BASE_URL=${ES_BASE_URL:-"https://elasticsearch-url"}
 ES_INDEX=${ES_INDEX:-"default-index"}
-LOGLEVEL=${LOGLEVEL:-"INFO"}
+LOGLEVEL=${LOGLEVEL:-INFO}
+
 
 python src/py/generate_availability.py \
   --onto_repo "$ONTO_REPO" \

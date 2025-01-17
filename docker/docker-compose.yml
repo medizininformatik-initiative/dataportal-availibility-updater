@@ -2,20 +2,20 @@ services:
   availability-updater:
     image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-test
     environment:
-      - ONTO_REPO=${ONTO_REPO:-"https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download"}
-      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v3.0.2"}
-      - ONTOLOGY_DIR=${ONTOLOGY_DIR:-"/opt/availability-updater/elastic_ontology"}
-      - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-"true"}
-      - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-"/opt/availability-updater/availability_input"}
-      - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-"/opt/availability-updater/availability_output"}
-      - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-"http://fhir-server:8080"}
-      - ES_BASE_URL=${ES_BASE_URL:-"http://dataportal-elastic:9200"}
-      - ES_INDEX=${ES_INDEX:-"ontology"}
-      - LOGLEVEL=${LOGLEVEL:-"INFO"}
+      - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
+      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v3.0.2-alpha}
+      - ONTOLOGY_DIR=${ONTOLOGY_DIR:-/opt/availability-updater/elastic_ontology}
+      - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-true}
+      - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-/opt/availability-updater/availability_input}
+      - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-/opt/availability-updater/availability_output}
+      - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-http://availability-report-store:8080/fhir}
+      - ES_BASE_URL=${ES_BASE_URL:-http://availability-dataportal-elastic:9200}
+      - ES_INDEX=${ES_INDEX:-ontology}
+      - LOGLEVEL=${LOGLEVEL:-INFO}
   availability-report-store:
     image: "samply/blaze:0.31"
     environment:
-      BASE_URL: ${AVAIL_REPORT_STORE:-http://localhost:8082}
+      BASE_URL: ${AVAIL_REPORT_STORE:-http://availability-report-store:8080}
       JAVA_TOOL_OPTIONS: "-Xmx2g"
       LOG_LEVEL: ${AVAIL_REPORT_STORE_LOG_LEVEL:-info}
     ports:
