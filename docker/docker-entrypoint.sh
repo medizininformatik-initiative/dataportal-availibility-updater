@@ -1,4 +1,5 @@
 #!/bin/bash
+
 ONTO_REPO=${ONTO_REPO:-"https://mydefault-onto-repo-url"}
 ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v1.0"}
 ONTOLOGY_DIR=${ONTOLOGY_DIR:-"/default/ontology/dir"}
@@ -10,9 +11,7 @@ ES_BASE_URL=${ES_BASE_URL:-"https://elasticsearch-url"}
 ES_INDEX=${ES_INDEX:-"default-index"}
 LOGLEVEL=${LOGLEVEL:-"INFO"}
 
-
-
-python src/py/generate-availability.py \
+python src/py/generate_availability.py \
   --onto_repo "$ONTO_REPO" \
   --onto_git_tag "$ONTO_GIT_TAG" \
   --ontology_dir "$ONTOLOGY_DIR" \

@@ -6,7 +6,7 @@ import zipfile
 
 import requests
 
-from ElasticAvailabilityGenerator import ElasticAvailabilityGenerator
+from elastic_availability_generator import ElasticAvailabilityGenerator
 
 def str_to_bool(s):
     return s.lower() in ["true", "yes", "1"]
