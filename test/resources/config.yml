@@ -1,0 +1,10 @@
+fhir_server:
+  base_url: "http://localhost:8088"
+  port: "8088"
+  image_tag: "0.31"
+elastic:
+  image_tag: "8.16.1"
+  port: "9200"
+onto:
+  repo: "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download"
+  tag: "v3.0.2-alpha"

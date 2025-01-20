@@ -6,6 +6,13 @@ import requests
 import subprocess
 import os
 import shutil
+import yaml
+
+
+@pytest.fixture(scope="session")
+def config():
+    with open("resources/config.yml", "r") as file:
+        return yaml.safe_load(file)
 
 @pytest.fixture(scope="session")
 def docker_client():
@@ -15,7 +22,7 @@ def docker_client():
 
 
 @pytest.fixture(scope="session")
-def start_containers(docker_client):
+def start_containers(docker_client, config):
 
     containers = []
     network = None
@@ -25,14 +32,14 @@ def start_containers(docker_client):
 
         print("Starting fhir server container...")
         fhir_report_server = docker_client.containers.run(
-            image="samply/blaze:0.31",
+            image=f"samply/blaze:{config['fhir_server']['image_tag']}",
             name="test-availability-report-store",
             environment={
-                "BASE_URL": "http://localhost:8080",
+                "BASE_URL": config['fhir_server']['base_url'],
                 "JAVA_TOOL_OPTIONS": "-Xmx2g",
                 "LOG_LEVEL": "debug"
             },
-            ports={"8080/tcp": 8080},
+            ports={"8080/tcp": config['fhir_server']['port']},
             detach=True
         )
 
@@ -40,7 +47,7 @@ def start_containers(docker_client):
 
         print("Starting elastic search container...")
         elastic_search = docker_client.containers.run(
-               image="docker.elastic.co/elasticsearch/elasticsearch:8.16.1",
+               image=f"docker.elastic.co/elasticsearch/elasticsearch:{config['elastic']['image_tag']}",
                name="test-dataportal-elastic",
                environment={
                    "discovery.type": "single-node",
@@ -49,24 +56,24 @@ def start_containers(docker_client):
                    "cluster.name": "elasticsearch",
                    "xpack.security.enabled": "false"
                },
-               ports={"9200/tcp": 9200},
+               ports={"9200/tcp": config['elastic']['port']},
                detach=True,
                network="test_network_availability"
            )
 
         containers.append(elastic_search)
 
-        wait_for_health("http://localhost:9200/_cluster/health", timeout=30)
+        wait_for_health(f"http://localhost:{config['elastic']['port']}/_cluster/health", timeout=30)
 
         print("Starting elastic search init container...")
-        elastic_search_init = docker_client.containers.run(
+        docker_client.containers.run(
             image="ghcr.io/medizininformatik-initiative/dataportal-es-init:latest",
             name="test-dataportal-elastic-init",
             environment={
                 "ES_HOST": "http://test-dataportal-elastic",
                 "ES_PORT": "9200",
-                "ONTO_GIT_TAG": "v3.0.2-alpha",
-                "ONTO_REPO": "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download",
+                "ONTO_GIT_TAG": config['onto']['tag'],
+                "ONTO_REPO": config['onto']['repo'],
                 "DOWNLOAD_FILENAME": "elastic.zip",
                 "EXIT_ON_EXISTING_INDICES": "false"
             },
@@ -75,13 +82,12 @@ def start_containers(docker_client):
             remove=True
         )
 
-        wait_for_health("http://localhost:8080/fhir", timeout=30)
+        wait_for_health(f"http://localhost:{config['fhir_server']['port']}/fhir", timeout=30)
 
         yield containers
 
     finally:
         print("Stopping and removing containers...")
-
         for container in containers:
             container.stop()
             container.remove()
@@ -89,7 +95,6 @@ def start_containers(docker_client):
         network.remove()
 
 def wait_for_health(url, timeout=30):
-    """Wait for the health check endpoint to become available."""
     start_time = time.time()
     while time.time() - start_time < timeout:
         try:
@@ -99,11 +104,11 @@ def wait_for_health(url, timeout=30):
                 return True
         except requests.ConnectionError:
             pass
-        time.sleep(1)  # Retry every second
+        time.sleep(1)
     raise TimeoutError(f"Health check failed: {url} did not become available within {timeout} seconds")
 
 
-def check_availability_was_updated():
+def check_availability_was_updated(config):
 
     data = {
         "query": {
@@ -127,7 +132,7 @@ def check_availability_was_updated():
         'Content-Type': 'application/json'
     }
 
-    response = requests.get("http://localhost:9200/ontology/_search", headers=headers, data=json.dumps(data))
+    response = requests.get(f"http://localhost:{config['elastic']['port']}/ontology/_search", headers=headers, data=json.dumps(data))
 
     if response.status_code == 200:
         search_result = response.json()
@@ -135,27 +140,27 @@ def check_availability_was_updated():
         return availability
 
 
-def test_basic_integration(start_containers):
+def test_basic_integration(start_containers, config):
 
     with open("resources/example_transaction_bundle_availability_report.json") as f:
         test_availability_report = json.load(f)
 
-    requests.post("http://localhost:8080/fhir", json=test_availability_report)
+    requests.post(f"http://localhost:{config['fhir_server']['port']}/fhir", json=test_availability_report)
 
     os.makedirs("tmp", exist_ok=True)
     shutil.copy("resources/stratum-to-context.json", "tmp/input_dir/stratum-to-context.json")
 
     result = subprocess.run(
         [
-            "python", "../src/py/generate-availability.py",  # Replace with your script's filename
-            "--onto_repo", "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download",
-            "--onto_git_tag", "v3.0.2-alpha",
+            "python", "../src/py/generate_availability.py",  # Replace with your script's filename
+            "--onto_repo", config['onto']['repo'],
+            "--onto_git_tag", config['onto']['tag'],
             "--update_ontology", "true",
             "--ontology_dir", "./tmp/elastic_ontology",
             "--availability_input_dir", "./tmp/input_dir",
             "--availability_output_dir", "./tmp/output_dir",
-            "--availability_report_server_base_url", "http://localhost:8080/fhir",
-            "--es_base_url", "http://localhost:9200",
+            "--availability_report_server_base_url", f"http://localhost:{config['fhir_server']['port']}/fhir",
+            "--es_base_url", f"http://localhost:{config['elastic']['port']}",
             "--es_index", "ontology",
             "--loglevel", "INFO",
         ],
@@ -165,6 +170,6 @@ def test_basic_integration(start_containers):
 
     assert result.returncode == 0, f"Script failed with error: {result.stderr}"
 
-    assert check_availability_was_updated() == 10000
+    assert check_availability_was_updated(config) == 10000
 
 
