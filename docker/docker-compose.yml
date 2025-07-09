@@ -3,7 +3,7 @@ services:
     image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-alpha
     environment:
       - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
-      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v3.0.2-alpha}
+      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v8.3.1}
       - ONTOLOGY_DIR=${ONTOLOGY_DIR:-/opt/availability-updater/elastic_ontology}
       - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-true}
       - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-/opt/availability-updater/availability_input}
