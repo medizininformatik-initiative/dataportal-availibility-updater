@@ -4,6 +4,7 @@ ONTO_REPO=${ONTO_REPO:-"https://mydefault-onto-repo-url"}
 ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v1.0"}
 ONTOLOGY_DIR=${ONTOLOGY_DIR:-"/default/ontology/dir"}
 UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-"false"}
+AVAILABILITY_MASTER_IDENT=${AVAILABILITY_MASTER_IDENT:-"fdpg-data-availability-report-obfuscated"}
 AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-"/default/input/dir"}
 AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-"/default/output/dir"}
 AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-"https://availability-report-server"}
@@ -17,6 +18,7 @@ python src/py/generate_availability.py \
   --onto_git_tag "$ONTO_GIT_TAG" \
   --ontology_dir "$ONTOLOGY_DIR" \
   --update_ontology "$UPDATE_ONTOLOGY" \
+  --availability_master_ident "$AVAILABILITY_MASTER_IDENT" \
   --availability_input_dir "$AVAILABILITY_INPUT_DIR" \
   --availability_output_dir "$AVAILABILITY_OUTPUT_DIR" \
   --availability_report_server_base_url "$AVAILABILITY_REPORT_SERVER_BASE_URL" \

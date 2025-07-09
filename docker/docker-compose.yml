@@ -7,6 +7,7 @@ services:
       - ONTOLOGY_DIR=${ONTOLOGY_DIR:-/opt/availability-updater/elastic_ontology}
       - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-true}
       - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-/opt/availability-updater/availability_input}
+      - AVAILABILITY_MASTER_IDENT=${AVAILABILITY_MASTER_IDENT:-"fdpg-data-availability-report-obfuscated"}
       - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-/opt/availability-updater/availability_output}
       - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-http://availability-report-store:8080/fhir}
       - ES_BASE_URL=${ES_BASE_URL:-http://availability-dataportal-elastic:9200}

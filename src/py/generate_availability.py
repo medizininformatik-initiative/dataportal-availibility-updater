@@ -26,12 +26,24 @@ def download_and_unzip(url, extract_to):
     os.remove(local_zip_path)
 
 
-def download_availability_reports(availability_input_dir, fhir_base_url):
-    response = requests.get(f'{fhir_base_url}/DocumentReference?_count=500&_format=json')
+def download_availability_reports(availability_input_dir, fhir_base_url, availability_master_ident):
+    response = requests.get(f'{fhir_base_url}/DocumentReference?_count=1000&_format=json')
 
     doc_refs = response.json()
 
-    for doc_ref in doc_refs['entry']:
+    found_reports = list(filter(
+        lambda d: (m := d['resource'].get('masterIdentifier', {})) and
+                  m.get('system') == 'http://medizininformatik-initiative.de/sid/project-identifier' and
+                  m.get('value') == availability_master_ident,
+        doc_refs.get('entry', [])
+    ))
+
+    n_reports_found = len(found_reports)
+
+    if n_reports_found < 3:
+        return n_reports_found
+
+    for doc_ref in found_reports:
 
         doc_ref = doc_ref['resource']
 
@@ -40,7 +52,7 @@ def download_availability_reports(availability_input_dir, fhir_base_url):
         master_ident_value = doc_ref['masterIdentifier']['value']
 
         if not (master_ident_system == 'http://medizininformatik-initiative.de/sid/project-identifier'
-                and master_ident_value == 'fdpg-availability-report'):
+                and master_ident_value == availability_master_ident):
             logging.info(f'Not a availability report Doc ref -> skipping')
             continue
 
@@ -63,6 +75,8 @@ def download_availability_reports(availability_input_dir, fhir_base_url):
 
         with open(os.path.join(availability_input_dir, report_file_name), 'w+') as fp:
             json.dump(measure_report, fp)
+
+    return n_reports_found
 
 
 def update_availability_in_es(es_base_url, es_index, availability_dir):
@@ -88,6 +102,7 @@ if __name__ == '__main__':
     parser.add_argument('--availability_input_dir', type=str)
     parser.add_argument('--availability_output_dir', type=str)
     parser.add_argument('--availability_report_server_base_url', type=str)
+    parser.add_argument('--availability_master_ident', type=str)
     parser.add_argument('--es_base_url', type=str)
     parser.add_argument('--es_index', type=str)
     parser.add_argument(
@@ -108,10 +123,18 @@ if __name__ == '__main__':
     os.makedirs(args.availability_output_dir, exist_ok=True)
 
     if args.update_ontology:
-        onto_download_url = f'{args.onto_repo}/{args.onto_git_tag}/elastic.zip'
-        download_and_unzip(onto_download_url, args.ontology_dir)
+        onto_download_url = f'{args.onto_repo}/{args.onto_git_tag}'
+        download_and_unzip(f'{onto_download_url}/elastic.zip', args.ontology_dir)
+        download_and_unzip(f'{onto_download_url}/availability.zip', args.availability_input_dir)
 
-    download_availability_reports(args.availability_input_dir, args.availability_report_server_base_url)
+    n_reports_downloaded = download_availability_reports(args.availability_input_dir, args.availability_report_server_base_url, args.availability_master_ident)
+
+
+    if n_reports_downloaded < 3:
+        logging.error(f'Found {n_reports_downloaded} availability reports -> Not enough availability reports found -> stopping')
+        exit(1)
+    else:
+        logging.info(f'Found {n_reports_downloaded} availability reports -> processing')
 
     es_avail_generator = ElasticAvailabilityGenerator(args.availability_input_dir, args.availability_output_dir,
                                                       args.ontology_dir)
