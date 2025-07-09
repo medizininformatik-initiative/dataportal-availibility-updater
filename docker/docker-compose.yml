@@ -3,10 +3,11 @@ services:
     image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.0-alpha
     environment:
       - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
-      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v3.0.2-alpha}
+      - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v8.3.1}
       - ONTOLOGY_DIR=${ONTOLOGY_DIR:-/opt/availability-updater/elastic_ontology}
       - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-true}
       - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-/opt/availability-updater/availability_input}
+      - AVAILABILITY_MASTER_IDENT=${AVAILABILITY_MASTER_IDENT:-"fdpg-data-availability-report-obfuscated"}
       - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-/opt/availability-updater/availability_output}
       - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-http://availability-report-store:8080/fhir}
       - ES_BASE_URL=${ES_BASE_URL:-http://availability-dataportal-elastic:9200}

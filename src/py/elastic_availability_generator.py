@@ -35,7 +35,7 @@ class ElasticAvailabilityGenerator:
         return count
 
     def convert_measure_score_to_ranges(self, measure_score):
-        buckets = [0, 10, 100, 1000, 10000, 50000, 100000, 150000, 200000, 1000000]
+        buckets = [0, 10, 100, 1000, 10000, 100000, 1000000]
         return max(b for b in buckets if measure_score >= b)
 
     def get_hashed_tree(self):
@@ -46,7 +46,7 @@ class ElasticAvailabilityGenerator:
             if 'onto_es__ontology' in filename:
                 filepath = os.path.join(directory, filename)
 
-                logging.debug("Opening file: " + filepath)
+                logging.debug("Processing Ontology file: " + filepath)
 
                 with open(filepath, 'r') as file:
                     for line in file:
@@ -83,6 +83,7 @@ class ElasticAvailabilityGenerator:
                                 strat_code = stratifier["code"][0]["coding"][0]["code"]
 
                                 if strat_code not in self.stratum_to_context:
+                                    logging.debug(f"Stratifier {strat_code} not in stratum_to_context -> skipping")
                                     continue
 
                                 context = self.stratum_to_context[strat_code]
@@ -108,6 +109,8 @@ class ElasticAvailabilityGenerator:
                                         if hash in self.es_onto_tree:
                                             self.es_onto_tree[hash]["availability"] = self.es_onto_tree[hash][
                                                                                           "availability"] + measure_score
+                                        else:
+                                            logging.debug(f'Context-Termcode combination not in ontology {context}, {termcode}')
 
     def __write_es_to_file(self, es_availability_inserts, max_filesize_mb, filename_prefix, extension, write_dir):
 

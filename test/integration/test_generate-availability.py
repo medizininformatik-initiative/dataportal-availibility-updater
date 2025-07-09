@@ -157,6 +157,7 @@ def test_basic_integration(start_containers, config):
             "--onto_git_tag", config['onto']['tag'],
             "--update_ontology", "true",
             "--ontology_dir", "./tmp/elastic_ontology",
+            "--availability_master_ident", "fdpg-data-availability-report-obfuscated",
             "--availability_input_dir", "./tmp/input_dir",
             "--availability_output_dir", "./tmp/output_dir",
             "--availability_report_server_base_url", f"http://localhost:{config['fhir_server']['port']}/fhir",
