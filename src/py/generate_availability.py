@@ -131,8 +131,8 @@ if __name__ == '__main__':
 
 
     if n_reports_downloaded < 3:
-        logging.error(f'Found {n_reports_downloaded} availability reports -> Not enough availability reports found -> stopping')
-        exit(1)
+        logging.info(f'Found {n_reports_downloaded} availability reports -> Not enough availability reports found -> stopping')
+        exit(0)
     else:
         logging.info(f'Found {n_reports_downloaded} availability reports -> processing')
 
