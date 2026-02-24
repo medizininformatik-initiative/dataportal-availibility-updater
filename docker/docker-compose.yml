@@ -11,6 +11,7 @@ services:
       - AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-/opt/availability-updater/availability_output}
       - AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-http://availability-report-store:8080/fhir}
       - ES_BASE_URL=${ES_BASE_URL:-http://availability-dataportal-elastic:9200}
+      - MIN_N_REPORTS=${MIN_N_REPORTS:-"3"}
       - ES_INDEX=${ES_INDEX:-ontology}
       - LOGLEVEL=${LOGLEVEL:-INFO}
   availability-report-store:

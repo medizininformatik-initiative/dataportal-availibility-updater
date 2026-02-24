@@ -163,6 +163,7 @@ def test_basic_integration(start_containers, config):
             "--availability-report-server-base-url", f"http://localhost:{config['fhir_server']['port']}/fhir",
             "--es-base-url", f"http://localhost:{config['elastic']['port']}",
             "--es-index", "ontology",
+            "--min-n-reports", "1",
             "--loglevel", "INFO",
         ],
         capture_output=True,
