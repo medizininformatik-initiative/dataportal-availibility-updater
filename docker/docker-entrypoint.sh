@@ -14,14 +14,14 @@ LOGLEVEL=${LOGLEVEL:-INFO}
 
 
 python src/py/generate_availability.py \
-  --onto_repo "$ONTO_REPO" \
-  --onto_git_tag "$ONTO_GIT_TAG" \
-  --ontology_dir "$ONTOLOGY_DIR" \
-  --update_ontology "$UPDATE_ONTOLOGY" \
-  --availability_master_ident "$AVAILABILITY_MASTER_IDENT" \
-  --availability_input_dir "$AVAILABILITY_INPUT_DIR" \
-  --availability_output_dir "$AVAILABILITY_OUTPUT_DIR" \
-  --availability_report_server_base_url "$AVAILABILITY_REPORT_SERVER_BASE_URL" \
-  --es_base_url "$ES_BASE_URL" \
-  --es_index "$ES_INDEX" \
+  --onto-repo "$ONTO_REPO" \
+  --onto-git-tag "$ONTO_GIT_TAG" \
+  --ontology-dir "$ONTOLOGY_DIR" \
+  --update-ontology "$UPDATE_ONTOLOGY" \
+  --availability-master-ident "$AVAILABILITY_MASTER_IDENT" \
+  --availability-input-dir "$AVAILABILITY_INPUT_DIR" \
+  --availability-output-dir "$AVAILABILITY_OUTPUT_DIR" \
+  --availability-report-server-base-url "$AVAILABILITY_REPORT_SERVER_BASE_URL" \
+  --es-base-url "$ES_BASE_URL" \
+  --es-index "$ES_INDEX" \
   --loglevel "$LOGLEVEL"
