@@ -55,12 +55,16 @@ if [ -f "$CA_CERT" ]; then
   AUTH_ARGS+=(--ca-cert "$CA_CERT")
 fi
 
+if [ "$UPDATE_ONTOLOGY" = "true" ]; then
+  UPDATE_ONTO="--update-ontology" 
+fi
+
 
 python src/py/generate_availability.py \
   --onto-repo "$ONTO_REPO" \
   --onto-git-tag "$ONTO_GIT_TAG" \
   --ontology-dir "$ONTOLOGY_DIR" \
-  --update-ontology "$UPDATE_ONTOLOGY" \
+  $UPDATE_ONTO \
   --availability-master-ident "$AVAILABILITY_MASTER_IDENT" \
   --availability-input-dir "$AVAILABILITY_INPUT_DIR" \
   --availability-output-dir "$AVAILABILITY_OUTPUT_DIR" \
