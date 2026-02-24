@@ -23,6 +23,7 @@ search and loads them into the specified elastic search instance.
 | --availability_report_server_base_url                 | None                                  | The base URL of the availability report server.                                                       |
 | --es_base_url                                         | None                                  | The base URL of the Elasticsearch instance.                                                           |
 | --es_index                                            | None                                  | The Elasticsearch index used for storing ontology data.                                               |
+| --min-n-reports                                       | 3                                     | The minimum number of reports required for the availability to be imported                            |
 | --loglevel                                            | INFO                                  | The logging level for the application (e.g., DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is INFO. |
 
 
@@ -41,4 +42,5 @@ search and loads them into the specified elastic search instance.
 | AVAILABILITY_REPORT_SERVER_BASE_URL      | http://availability-report-store:8080/fhir                                                | The base URL of the availability report server - local fhir server which contains the reports             |
 | ES_BASE_URL                              | http://availability-dataportal-elastic:9200                                               | The base URL of the Elasticsearch instance.                                                               |
 | ES_INDEX                                 | ontology                                                                                  | The Elasticsearch index used for storing ontology data.                                                   |
+| MIN_N_REPORTS                            | 3                                                                                         | The minimum number of reports required for the availability to be imported                                |
 | LOGLEVEL                                 | INFO                                                                                      | The logging level for the application (e.g., INFO, DEBUG, ERROR).                                         |
