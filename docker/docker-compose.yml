@@ -1,6 +1,6 @@
 services:
   availability-updater:
-    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.1.1
+    image: ghcr.io/medizininformatik-initiative/dataportal-availability-updater:0.3.0
     environment:
     - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
     - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v8.3.1}
