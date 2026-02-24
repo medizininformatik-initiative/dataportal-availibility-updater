@@ -153,16 +153,16 @@ def test_basic_integration(start_containers, config):
     result = subprocess.run(
         [
             "python", "../src/py/generate_availability.py",  # Replace with your script's filename
-            "--onto_repo", config['onto']['repo'],
-            "--onto_git_tag", config['onto']['tag'],
-            "--update_ontology", "true",
-            "--ontology_dir", "./tmp/elastic_ontology",
-            "--availability_master_ident", "fdpg-data-availability-report-obfuscated",
-            "--availability_input_dir", "./tmp/input_dir",
-            "--availability_output_dir", "./tmp/output_dir",
-            "--availability_report_server_base_url", f"http://localhost:{config['fhir_server']['port']}/fhir",
-            "--es_base_url", f"http://localhost:{config['elastic']['port']}",
-            "--es_index", "ontology",
+            "--onto-repo", config['onto']['repo'],
+            "--onto-git-tag", config['onto']['tag'],
+            "--update-ontology"
+            "--ontology-dir", "./tmp/elastic_ontology",
+            "--availability-master-ident", "fdpg-data-availability-report-obfuscated",
+            "--availability-input-dir", "./tmp/input_dir",
+            "--availability-output-dir", "./tmp/output_dir",
+            "--availability-report-server-base-url", f"http://localhost:{config['fhir_server']['port']}/fhir",
+            "--es-base-url", f"http://localhost:{config['elastic']['port']}",
+            "--es-index", "ontology",
             "--loglevel", "INFO",
         ],
         capture_output=True,

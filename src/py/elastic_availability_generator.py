@@ -1,158 +1,178 @@
 import json
 import logging
-import os
 import uuid
+from pathlib import Path
+from typing import Dict, Any, Iterable
+
+log = logging.getLogger(__name__)
+
+PATIENT_STRAT_TO_TERMCODE: Dict[str, Dict[str, str]] = {
+    "patient-gender": {
+        "system": "http://snomed.info/sct",
+        "code": "263495000",
+    },
+    "patient-birthdate-exists": {
+        "system": "http://snomed.info/sct",
+        "code": "424144002",
+    },
+}
 
 
 class ElasticAvailabilityGenerator:
-    namespace_uuid_str = '00000000-0000-0000-0000-000000000000'
-    extension = '.json'
-    max_filesize_mb = 10
+    """
+    Generates Elasticsearch partial update files that contain availability buckets
+    derived from availability reports and ontology trees.
+    """
 
-    def __init__(self, availability_input_dir, availability_output_dir, es_ontology_dir):
-        self.availability_input_dir = availability_input_dir
-        self.availability_output_dir = availability_output_dir
-        self.es_ontology_dir = es_ontology_dir
-        self.es_onto_tree = {}
+    NAMESPACE_UUID = uuid.UUID("00000000-0000-0000-0000-000000000000")
+    FILE_EXTENSION = ".json"
+    MAX_FILESIZE_MB = 10
 
-        with open(os.path.join(self.availability_input_dir, 'stratum-to-context.json')) as fp:
-            self.stratum_to_context = json.load(fp)
+    def __init__(self, availability_input_dir: str, availability_output_dir: str, es_ontology_dir: str) -> None:
+        self.input_dir = Path(availability_input_dir)
+        self.output_dir = Path(availability_output_dir)
+        self.ontology_dir = Path(es_ontology_dir)
 
-    def __get_contextualized_termcode_hash(self, context_node: dict, termcode_node: dict):
+        self.es_tree: Dict[str, Dict[str, Any]] = {}
 
-        context_termcode_hash_input = f"{context_node.get('system')}{context_node.get('code')}{context_node.get('version', '')}{termcode_node.get('system')}{termcode_node.get('code')}"
+        mapping_file = self.input_dir / "stratum-to-context.json"
+        self.stratum_to_context = json.loads(mapping_file.read_text(encoding="utf-8"))
 
-        namespace_uuid = uuid.UUID(self.namespace_uuid_str)
-        return str(uuid.uuid3(namespace_uuid, context_termcode_hash_input))
+    def _contextualized_hash(self, context: Dict[str, str], termcode: Dict[str, str]) -> str:
+        """Create stable UUID3 hash for context + termcode combination."""
+        raw = (
+            f"{context.get('system')}{context.get('code')}{context.get('version', '')}"
+            f"{termcode.get('system')}{termcode.get('code')}"
+        )
+        return str(uuid.uuid3(self.NAMESPACE_UUID, raw))
 
-    def get_avail_sum_for_all_children(self, parent_id):
+    def load_ontology_tree(self) -> None:
+        """Loads ontology export (newline-delimited JSON)."""
+        elastic_dir = self.ontology_dir / "elastic"
 
-        count = self.es_onto_tree[parent_id]["availability"]
+        for file in elastic_dir.glob("*onto_es__ontology*"):
+            log.info("Loading ontology file %s", file)
 
-        for child in self.es_onto_tree[parent_id]["children"]:
-            count = count + self.get_avail_sum_for_all_children(child["contextualized_termcode_hash"])
+            current_id = None
+            for line in file.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
 
-        return count
+                obj = json.loads(line)
 
-    def convert_measure_score_to_ranges(self, measure_score):
-        buckets = [0, 10, 100, 1000, 10000, 100000, 1000000]
-        return max(b for b in buckets if measure_score >= b)
+                if "index" in obj:
+                    current_id = obj["index"]["_id"]
+                else:
+                    self.es_tree[current_id] = {
+                        "availability": 0,
+                        "children": obj.get("children", []),
+                    }
 
-    def get_hashed_tree(self):
+        log.info("Loaded %d ontology nodes", len(self.es_tree))
 
-        directory = os.path.join(self.es_ontology_dir, "elastic")
+    def _bucketize(self, value: int) -> int:
+        buckets = (0, 10, 100, 1_000, 10_000, 100_000, 1_000_000)
+        return max(b for b in buckets if value >= b)
 
-        for filename in os.listdir(directory):
-            if 'onto_es__ontology' in filename:
-                filepath = os.path.join(directory, filename)
+    def _accumulate_availability(self, node_id: str, cache: Dict[str, int]) -> int:
+        if node_id in cache:
+            return cache[node_id]
 
-                logging.debug("Processing Ontology file: " + filepath)
+        node = self.es_tree[node_id]
+        total = node["availability"]
 
-                with open(filepath, 'r') as file:
-                    for line in file:
-                        line = line.strip()
+        for child in node["children"]:
+            total += self._accumulate_availability(child["contextualized_termcode_hash"], cache)
 
-                        if line:
-                            obj = json.loads(line)
+        cache[node_id] = total
+        return total
 
-                            if "index" in obj:
-                                cur_hash = obj["index"]["_id"]
-                            else:
+    def _apply_measure(self, context: Dict[str, str], termcode: Dict[str, str], score: int) -> None:
+        node_hash = self._contextualized_hash(context, termcode)
 
-                                self.es_onto_tree[cur_hash] = {
-                                    "availability": 0,
-                                    "children": obj["children"]
-                                }
+        if node_hash not in self.es_tree:
+            log.debug("Missing ontology node for %s %s", context, termcode)
+            return
 
-    def update_availability_on_hash_tree(self):
+        self.es_tree[node_hash]["availability"] += score
 
-        hash_set = set()
+    def update_from_reports(self) -> None:
+        for file in self.input_dir.glob("*availability_report*"):
+            log.info("Processing report %s", file)
 
-        for filename in os.listdir(self.availability_input_dir):
-            if 'availability_report' in filename:
-                filepath = os.path.join(self.availability_input_dir, filename)
+            report = json.loads(file.read_text(encoding="utf-8"))
 
-                with open(filepath, "r") as f:
-                    report = json.load(f)
+            for group in report.get("group", []):
+                for stratifier in group.get("stratifier", []):
+                    if "stratum" not in stratifier:
+                        continue
 
-                    for group in report["group"]:
+                    strat_code = stratifier["code"][0]["coding"][0]["code"]
 
-                        for stratifier in group["stratifier"]:
-                            if "stratum" in stratifier:
+                    if strat_code not in self.stratum_to_context and strat_code not in PATIENT_STRAT_TO_TERMCODE:
+                        log.debug("Skipping unknown stratifier %s", strat_code)
+                        continue
 
-                                strat_code = stratifier["code"][0]["coding"][0]["code"]
+                    context = self.stratum_to_context.get(strat_code)
 
-                                if strat_code not in self.stratum_to_context:
-                                    logging.debug(f"Stratifier {strat_code} not in stratum_to_context -> skipping")
-                                    continue
+                    if strat_code in PATIENT_STRAT_TO_TERMCODE:
+                        termcode = PATIENT_STRAT_TO_TERMCODE[strat_code]
+                        score = sum(s["measureScore"]["value"] for s in stratifier["stratum"])
+                        self._apply_measure(context, termcode, score)
+                        continue
 
-                                context = self.stratum_to_context[strat_code]
+                    for stratum in stratifier["stratum"]:
+                        coding = stratum["value"]["coding"][0]
 
-                                for stratum in stratifier["stratum"]:
-                                    measure_score = stratum["measureScore"]["value"]
+                        if "system" not in coding:
+                            continue
 
-                                    if "system" not in stratum["value"]["coding"][0]:
-                                        continue
+                        termcode = {"system": coding["system"], "code": coding["code"]}
+                        score = stratum["measureScore"]["value"]
 
-                                    strat_system = stratum["value"]["coding"][0]["system"]
-                                    strat_code = stratum["value"]["coding"][0]["code"]
+                        self._apply_measure(context, termcode, score)
 
-                                    termcode = {
-                                        "system": strat_system,
-                                        "code": strat_code
-                                    }
+    def _write_chunked(self, docs: Iterable[Dict[str, Any]], prefix: str) -> None:
 
-                                    if context:
-                                        hash = self.__get_contextualized_termcode_hash(context, termcode)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
-                                        hash_set.add(hash)
-                                        if hash in self.es_onto_tree:
-                                            self.es_onto_tree[hash]["availability"] = self.es_onto_tree[hash][
-                                                                                          "availability"] + measure_score
-                                        else:
-                                            logging.debug(f'Context-Termcode combination not in ontology {context}, {termcode}')
+        file_index = 1
+        current_size = 0
+        max_bytes = self.MAX_FILESIZE_MB * 1024 * 1024
 
-    def __write_es_to_file(self, es_availability_inserts, max_filesize_mb, filename_prefix, extension, write_dir):
+        fh = (self.output_dir / f"{prefix}_{file_index}{self.FILE_EXTENSION}").open("w", encoding="utf-8")
 
-        current_file_subindex = 1
-        current_file_size = 0
-        count = 0
+        for doc in docs:
+            line = json.dumps(doc, ensure_ascii=False) + "\n"
+            encoded = line.encode("utf-8")
 
-        current_file_name = os.path.join(write_dir, f"{filename_prefix}_{current_file_subindex}{extension}")
-        with open(current_file_name, 'w+', encoding='UTF-8') as current_file:
+            if current_size + len(encoded) > max_bytes:
+                fh.close()
+                file_index += 1
+                fh = (self.output_dir / f"{prefix}_{file_index}{self.FILE_EXTENSION}").open("w", encoding="utf-8")
+                current_size = 0
 
-            for insert in es_availability_inserts:
+            fh.write(line)
+            current_size += len(encoded)
 
-                count = count + 1
-                current_line = f"{json.dumps(insert, ensure_ascii=False)}\n"
-                current_file.write(current_line)
-                current_file_size += len(current_line)
+        fh.close()
 
-                if current_file_size > max_filesize_mb * 1024 * 1024 and count % 2 == 0:
-                    current_file_subindex += 1
-                    current_file_name = os.path.join(write_dir, f"{filename_prefix}_{current_file_subindex}{extension}")
-                    current_file_size = 0
-                    current_file.close()
-                    current_file = open(current_file_name, 'w', encoding='UTF-8')
+    def generate(self) -> None:
+        """Main pipeline."""
+        self.load_ontology_tree()
+        self.update_from_reports()
 
-    def generate_availability(self):
+        cache: Dict[str, int] = {}
+        updates = []
 
-        es_availability_inserts = []
-        self.get_hashed_tree()
-        self.update_availability_on_hash_tree()
+        for node_id in self.es_tree:
+            total = self._accumulate_availability(node_id, cache)
+            bucket = self._bucketize(total)
 
-        for key, value in self.es_onto_tree.items():
-            sum_all_children = self.get_avail_sum_for_all_children(key)
-            insert_hash = {"update": {"_id": key}}
-            insert_availability = {
-                "doc": {"availability": self.convert_measure_score_to_ranges(sum_all_children)}}
+            if total > 0:
+                log.debug("Node %s → %d (bucket %d)", node_id, total, bucket)
 
-            if sum_all_children > 0:
-                logging.debug(
-                    f'key {key} is available with {sum_all_children} - converted to {self.convert_measure_score_to_ranges(sum_all_children)}')
+            updates.append({"update": {"_id": node_id}})
+            updates.append({"doc": {"availability": bucket}})
 
-            es_availability_inserts.append(insert_hash)
-            es_availability_inserts.append(insert_availability)
-
-        self.__write_es_to_file(es_availability_inserts, self.max_filesize_mb,
-                                "es_availability_update", self.extension, self.availability_output_dir)
+        self._write_chunked(updates, "es_availability_update")
