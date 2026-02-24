@@ -136,6 +136,7 @@ def parse_args() -> argparse.Namespace:
 
     parser.add_argument("--es-base-url", required=True)
     parser.add_argument("--es-index", required=True)
+    parser.add_argument("--min-n-reports", default=3, required=False, type=int)
 
     parser.add_argument(
         "--loglevel",
@@ -172,8 +173,8 @@ def main() -> None:
             args.availability_master_ident,
         )
 
-        if n_reports < 3:
-            log.info("Only %d reports found → stopping", n_reports)
+        if n_reports < args.min_n_reports:
+            log.info("Only %d reports found, but %d required → stopping", n_reports, args.min_n_reports)
             return
 
         log.info("Processing %d reports", n_reports)

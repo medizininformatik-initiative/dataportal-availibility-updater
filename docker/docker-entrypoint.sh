@@ -10,6 +10,7 @@ AVAILABILITY_OUTPUT_DIR=${AVAILABILITY_OUTPUT_DIR:-"/default/output/dir"}
 AVAILABILITY_REPORT_SERVER_BASE_URL=${AVAILABILITY_REPORT_SERVER_BASE_URL:-"https://availability-report-server"}
 ES_BASE_URL=${ES_BASE_URL:-"https://elasticsearch-url"}
 ES_INDEX=${ES_INDEX:-"default-index"}
+MIN_N_REPORTS=${MIN_N_REPORTS:-"3"}
 LOGLEVEL=${LOGLEVEL:-INFO}
 
 
@@ -24,4 +25,6 @@ python src/py/generate_availability.py \
   --availability-report-server-base-url "$AVAILABILITY_REPORT_SERVER_BASE_URL" \
   --es-base-url "$ES_BASE_URL" \
   --es-index "$ES_INDEX" \
+  --min-n-reports "$MIN_N_REPORTS" \
   --loglevel "$LOGLEVEL"
+
