@@ -13,6 +13,48 @@ ES_INDEX=${ES_INDEX:-"default-index"}
 MIN_N_REPORTS=${MIN_N_REPORTS:-"3"}
 LOGLEVEL=${LOGLEVEL:-INFO}
 
+# Enable oauth
+USE_OAUTH2=${USE_OAUTH2:-"false"}
+OAUTH_TOKEN_URL=${OAUTH_TOKEN_URL:-""}
+OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID:-""}
+OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:-""}
+OAUTH_SCOPE=${OAUTH_SCOPE:-""}
+
+# Enable Basic Auth (true/false)
+USE_BASIC_AUTH=${USE_BASIC_AUTH:-"false"}
+BASIC_USERNAME=${BASIC_USERNAME:-""}
+BASIC_PASSWORD=${BASIC_PASSWORD:-""}
+
+# ------------------------------------------------------------------
+# Build optional CLI flags
+# ------------------------------------------------------------------
+
+AUTH_ARGS=()
+
+if [ "$USE_OAUTH2" = "true" ]; then
+  AUTH_ARGS+=(--use-oauth2)
+  AUTH_ARGS+=(--oauth-token-url "$OAUTH_TOKEN_URL")
+  AUTH_ARGS+=(--oauth-client-id "$OAUTH_CLIENT_ID")
+  AUTH_ARGS+=(--oauth-client-secret "$OAUTH_CLIENT_SECRET")
+
+  if [ -n "$OAUTH_SCOPE" ]; then
+    AUTH_ARGS+=(--oauth-scope "$OAUTH_SCOPE")
+  fi
+fi
+
+if [ "$USE_BASIC_AUTH" = "true" ]; then
+  AUTH_ARGS+=(--use-basic-auth)
+  AUTH_ARGS+=(--basic-username "$BASIC_USERNAME")
+  AUTH_ARGS+=(--basic-password "$BASIC_PASSWORD")
+fi
+
+
+CA_CERT="/opt/availability-updater/auth/cert.pem"
+# Optional own ca cert
+if [ -f "$CA_CERT" ]; then
+  AUTH_ARGS+=(--ca-cert "$CA_CERT")
+fi
+
 
 python src/py/generate_availability.py \
   --onto-repo "$ONTO_REPO" \
@@ -26,5 +68,5 @@ python src/py/generate_availability.py \
   --es-base-url "$ES_BASE_URL" \
   --es-index "$ES_INDEX" \
   --min-n-reports "$MIN_N_REPORTS" \
-  --loglevel "$LOGLEVEL"
-
+  --loglevel "$LOGLEVEL" \
+  "${AUTH_ARGS[@]}"

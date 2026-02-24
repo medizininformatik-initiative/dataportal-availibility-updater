@@ -13,6 +13,7 @@ WORKDIR /opt/availability-updater
 RUN mkdir availability_input
 RUN mkdir availability_output
 RUN mkdir elastic_ontology
+RUN mkdir auth
 COPY src/resources/stratum-to-context.json /opt/availability-updater/availability_input
 
 RUN chown -R 10001:10001 /opt/availability-updater

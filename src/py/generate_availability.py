@@ -3,8 +3,11 @@ import json
 import logging
 import zipfile
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 import io
+from requests.auth import HTTPBasicAuth
+import tempfile
+import certifi
 
 import requests
 
@@ -13,6 +16,73 @@ from elastic_availability_generator import ElasticAvailabilityGenerator
 log = logging.getLogger(__name__)
 
 PROJECT_IDENTIFIER_SYSTEM = "http://medizininformatik-initiative.de/sid/project-identifier"
+
+
+def get_combined_ca_bundle(custom_ca_path: Optional[str] = None) -> Optional[str]:
+    """
+    Return a CA bundle path that includes both system CAs and optional custom CA.
+    """
+    if not custom_ca_path:
+        return True
+
+    custom_path = Path(custom_ca_path)
+    if not custom_path.is_file():
+        raise ValueError(f"Custom CA file not found: {custom_ca_path}")
+
+    system_cas = Path(certifi.where()).read_text()
+    custom_cas = custom_path.read_text()
+
+    tmp_bundle = tempfile.NamedTemporaryFile(mode="w+", delete=False)
+    tmp_bundle.write(system_cas)
+    tmp_bundle.write("\n")
+    tmp_bundle.write(custom_cas)
+    tmp_bundle.flush()
+    tmp_bundle.close()
+
+    return tmp_bundle.name
+
+
+def get_oauth2_token(token_url: str, client_id: str, client_secret: str, scope: Optional[str] = None, ca_cert_path: Optional[str] = None) -> str:
+    """
+    Fetch an OAuth2 token using client credentials flow.
+    """
+    data = {"grant_type": "client_credentials"}
+    if scope:
+        data["scope"] = scope
+
+    response = requests.post(token_url, data=data, auth=HTTPBasicAuth(client_id, client_secret), verify=ca_cert_path or True)
+    response.raise_for_status()
+    token_info = response.json()
+    return token_info.get("access_token")
+
+
+def configure_session(
+    session: requests.Session,
+    use_oauth2: bool = False,
+    token_url: Optional[str] = None,
+    client_id: Optional[str] = None,
+    client_secret: Optional[str] = None,
+    scope: Optional[str] = None,
+    use_basic_auth: bool = False,
+    username: Optional[str] = None,
+    password: Optional[str] = None,
+    ca_cert_path: Optional[str] = None
+):
+
+    ca_bundle = get_combined_ca_bundle(ca_cert_path)
+
+    session.verify = ca_bundle
+
+    if use_oauth2:
+        if not all([token_url, client_id, client_secret]):
+            raise ValueError("token_url, client_id, client_secret required for OAuth2")
+        token = get_oauth2_token(token_url, client_id, client_secret, scope, ca_cert_path=ca_cert_path)
+        session.headers.update({"Authorization": f"Bearer {token}"})
+
+    if use_basic_auth:
+        if not username or not password:
+            raise ValueError("Username and password required for basic auth")
+        session.auth = HTTPBasicAuth(username, password)
 
 
 def download_and_unzip(session, url: str, extract_to: Path) -> None:
@@ -144,6 +214,18 @@ def parse_args() -> argparse.Namespace:
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
     )
 
+    parser.add_argument("--use-oauth2", action="store_true")
+    parser.add_argument("--oauth-token-url")
+    parser.add_argument("--oauth-client-id")
+    parser.add_argument("--oauth-client-secret")
+    parser.add_argument("--oauth-scope")
+
+    parser.add_argument("--use-basic-auth", action="store_true")
+    parser.add_argument("--basic-username")
+    parser.add_argument("--basic-password")
+
+    parser.add_argument("--ca-cert", type=str, default=None)
+
     return parser.parse_args()
 
 
@@ -160,6 +242,19 @@ def main() -> None:
     args.availability_output_dir.mkdir(parents=True, exist_ok=True)
 
     with requests.Session() as session:
+
+        configure_session(
+            session,
+            use_oauth2=args.use_oauth2,
+            token_url=args.oauth_token_url,
+            client_id=args.oauth_client_id,
+            client_secret=args.oauth_client_secret,
+            scope=args.oauth_scope,
+            use_basic_auth=args.use_basic_auth,
+            username=args.basic_username,
+            password=args.basic_password,
+            ca_cert_path=args.ca_cert
+        )
 
         if args.update_ontology:
             base = f"{args.onto_repo}/{args.onto_git_tag}"
