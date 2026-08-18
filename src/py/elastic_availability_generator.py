@@ -1,8 +1,9 @@
 import json
 import logging
+import sys
 import uuid
 from pathlib import Path
-from typing import Dict, Any, Iterable, List
+from typing import Dict, Any, Iterable, List, Optional
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +34,15 @@ class ElasticAvailabilityGenerator:
         self.output_dir = Path(availability_output_dir)
         self.ontology_dir = Path(es_ontology_dir)
 
-        self.es_tree: Dict[str, Dict[str, Any]] = {}
+        # Node data is split into two flat dicts instead of one dict-of-dicts:
+        # the ontology export easily runs into the hundreds of thousands of
+        # nodes, and each nested dict plus the unused per-child fields
+        # (display text, terminology, ...) added multiple GB of avoidable
+        # overhead. Only the child hash is ever read, so that's all we keep,
+        # and IDs are interned so a hash shared between a node's key and
+        # another node's children list is stored as a single string object.
+        self.availability: Dict[str, int] = {}
+        self.children: Dict[str, Optional[List[str]]] = {}
 
         mapping_file = self.input_dir / "stratum-to-context.json"
         self.stratum_to_context = json.loads(mapping_file.read_text(encoding="utf-8"))
@@ -49,6 +58,7 @@ class ElasticAvailabilityGenerator:
     def load_ontology_tree(self) -> None:
         """Loads ontology export (newline-delimited JSON)."""
         elastic_dir = self.ontology_dir / "elastic"
+        intern = sys.intern
 
         for file in elastic_dir.glob("*onto_es__ontology*"):
             log.info("Loading ontology file %s", file)
@@ -61,14 +71,13 @@ class ElasticAvailabilityGenerator:
                 obj = json.loads(line)
 
                 if "index" in obj:
-                    current_id = obj["index"]["_id"]
+                    current_id = intern(obj["index"]["_id"])
                 else:
-                    self.es_tree[current_id] = {
-                        "availability": 0,
-                        "children": obj.get("children", []),
-                    }
+                    self.availability[current_id] = 0
+                    children = [intern(child["contextualized_termcode_hash"]) for child in obj.get("children", [])]
+                    self.children[current_id] = children or None
 
-        log.info("Loaded %d ontology nodes", len(self.es_tree))
+        log.info("Loaded %d ontology nodes", len(self.availability))
 
     def _bucketize(self, value: int) -> int:
         buckets = (0, 10, 100, 1_000, 10_000, 100_000, 1_000_000)
@@ -81,13 +90,11 @@ class ElasticAvailabilityGenerator:
         if in_progress is None:
             in_progress = set()
 
-        node = self.es_tree[node_id]
-        total = node["availability"]
+        total = self.availability[node_id]
 
         in_progress.add(node_id)
-        for child in node["children"]:
-            child_id = child["contextualized_termcode_hash"]
-            if child_id not in self.es_tree:
+        for child_id in self.children[node_id] or ():
+            if child_id not in self.availability:
                 log.debug("Missing ontology node for child %s of %s", child_id, node_id)
                 continue
             if child_id in in_progress:
@@ -102,11 +109,11 @@ class ElasticAvailabilityGenerator:
     def _apply_measure(self, context: Dict[str, str], termcode: Dict[str, str], score: int) -> None:
         node_hash = self._contextualized_hash(context, termcode)
 
-        if node_hash not in self.es_tree:
+        if node_hash not in self.availability:
             log.debug("Missing ontology node for %s %s", context, termcode)
             return
 
-        self.es_tree[node_hash]["availability"] += score
+        self.availability[node_hash] += score
 
     def update_from_reports(self) -> None:
         for file in self.input_dir.glob("*availability_report*"):
@@ -171,21 +178,23 @@ class ElasticAvailabilityGenerator:
 
         fh.close()
 
-    def generate(self) -> None:
-        """Main pipeline."""
-        self.load_ontology_tree()
-        self.update_from_reports()
-
-        cache: Dict[str, int] = {}
-        updates = []
-
-        for node_id in self.es_tree:
+    def _build_updates(self, cache: Dict[str, int]) -> Iterable[List[Dict[str, Any]]]:
+        for node_id in self.availability:
             total = self._accumulate_availability(node_id, cache)
             bucket = self._bucketize(total)
 
             if total > 0:
                 log.debug("Node %s → %d (bucket %d)", node_id, total, bucket)
 
-            updates.append([{"update": {"_id": node_id}}, {"doc": {"availability": bucket}}])
+            yield [{"update": {"_id": node_id}}, {"doc": {"availability": bucket}}]
 
-        self._write_chunked(updates, "es_availability_update")
+    def generate(self) -> None:
+        """Main pipeline."""
+        self.load_ontology_tree()
+        self.update_from_reports()
+
+        # Records are streamed straight into _write_chunked rather than collected
+        # into a list first: materializing all ~700k update/doc pairs up front
+        # roughly doubled peak memory on top of the ontology tree itself.
+        cache: Dict[str, int] = {}
+        self._write_chunked(self._build_updates(cache), "es_availability_update")
