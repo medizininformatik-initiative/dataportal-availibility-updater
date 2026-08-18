@@ -4,6 +4,9 @@ services:
     environment:
     - ONTO_REPO=${ONTO_REPO:-https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download}
     - ONTO_GIT_TAG=${ONTO_GIT_TAG:-v8.3.1}
+    # Optional basic auth for downloading from ONTO_REPO, e.g. when it is proxied through an artifactory
+    - ONTO_REPO_USERNAME=${ONTO_REPO_USERNAME:-}
+    - ONTO_REPO_PASSWORD=${ONTO_REPO_PASSWORD:-}
     - ONTOLOGY_DIR=${ONTOLOGY_DIR:-/opt/availability-updater/elastic_ontology}
     - UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-true}
     - AVAILABILITY_INPUT_DIR=${AVAILABILITY_INPUT_DIR:-/opt/availability-updater/availability_input}

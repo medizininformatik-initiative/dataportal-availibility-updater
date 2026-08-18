@@ -98,10 +98,20 @@ def configure_session(
         session.auth = HTTPBasicAuth(username, password)
 
 
-def download_and_unzip(session, url: str, extract_to: Path) -> None:
+def build_onto_repo_auth(username: Optional[str], password: Optional[str]) -> Optional[HTTPBasicAuth]:
+    if bool(username) != bool(password):
+        raise ValueError("Both --onto-repo-username and --onto-repo-password are required together")
+
+    if username and password:
+        return HTTPBasicAuth(username, password)
+
+    return None
+
+
+def download_and_unzip(session, url: str, extract_to: Path, auth: Optional[HTTPBasicAuth] = None) -> None:
     log.info("Downloading %s", url)
 
-    resp = session.get(url, timeout=120)
+    resp = session.get(url, timeout=120, auth=auth)
     resp.raise_for_status()
 
     content_type = resp.headers.get("Content-Type", "")
@@ -213,6 +223,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--onto-repo", required=True)
     parser.add_argument("--onto-git-tag", required=True)
     parser.add_argument("--update-ontology", action="store_true")
+    parser.add_argument("--onto-repo-username")
+    parser.add_argument("--onto-repo-password")
 
     parser.add_argument("--ontology-dir", required=True, type=Path)
     parser.add_argument("--availability-input-dir", required=True, type=Path)
@@ -274,9 +286,11 @@ def main() -> None:
         )
 
         if args.update_ontology:
+            onto_repo_auth = build_onto_repo_auth(args.onto_repo_username, args.onto_repo_password)
+
             base = f"{args.onto_repo}/{args.onto_git_tag}"
-            download_and_unzip(session, f"{base}/elastic.zip", args.ontology_dir)
-            download_and_unzip(session, f"{base}/availability.zip", args.availability_input_dir)
+            download_and_unzip(session, f"{base}/elastic.zip", args.ontology_dir, auth=onto_repo_auth)
+            download_and_unzip(session, f"{base}/availability.zip", args.availability_input_dir, auth=onto_repo_auth)
 
         n_reports = download_availability_reports(
             session,
