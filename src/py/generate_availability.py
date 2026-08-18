@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 import re
+import shutil
 import zipfile
 from pathlib import Path
 from typing import List, Optional
@@ -100,8 +101,6 @@ def configure_session(
 def download_and_unzip(session, url: str, extract_to: Path) -> None:
     log.info("Downloading %s", url)
 
-    extract_to.mkdir(parents=True, exist_ok=True)
-
     resp = session.get(url, timeout=120)
     resp.raise_for_status()
 
@@ -113,6 +112,12 @@ def download_and_unzip(session, url: str, extract_to: Path) -> None:
         )
 
     data = io.BytesIO(resp.content)
+
+    # extract_to is a persistent dir across runs; stale files from a previous
+    # release must not linger and get merged with the newly extracted ones.
+    if extract_to.exists():
+        shutil.rmtree(extract_to)
+    extract_to.mkdir(parents=True, exist_ok=True)
 
     with zipfile.ZipFile(data) as zf:
         zf.extractall(extract_to)
