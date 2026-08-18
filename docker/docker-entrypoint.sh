@@ -2,6 +2,8 @@
 
 ONTO_REPO=${ONTO_REPO:-"https://mydefault-onto-repo-url"}
 ONTO_GIT_TAG=${ONTO_GIT_TAG:-"v1.0"}
+ONTO_REPO_USERNAME=${ONTO_REPO_USERNAME:-""}
+ONTO_REPO_PASSWORD=${ONTO_REPO_PASSWORD:-""}
 ONTOLOGY_DIR=${ONTOLOGY_DIR:-"/default/ontology/dir"}
 UPDATE_ONTOLOGY=${UPDATE_ONTOLOGY:-"false"}
 AVAILABILITY_MASTER_IDENT=${AVAILABILITY_MASTER_IDENT:-"fdpg-data-availability-report-obfuscated"}
@@ -30,6 +32,11 @@ BASIC_PASSWORD=${BASIC_PASSWORD:-""}
 # ------------------------------------------------------------------
 
 AUTH_ARGS=()
+
+if [ -n "$ONTO_REPO_USERNAME" ]; then
+  AUTH_ARGS+=(--onto-repo-username "$ONTO_REPO_USERNAME")
+  AUTH_ARGS+=(--onto-repo-password "$ONTO_REPO_PASSWORD")
+fi
 
 if [ "$USE_OAUTH2" = "true" ]; then
   AUTH_ARGS+=(--use-oauth2)
