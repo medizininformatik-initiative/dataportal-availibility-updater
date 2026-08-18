@@ -122,6 +122,11 @@ def check_availability_was_updated(config):
                                 "termcode^2"
                             ]
                         }
+                    },
+                    {
+                        "match": {
+                            "context.code": "Diagnose"
+                        }
                     }
                 ]
             }
@@ -147,15 +152,15 @@ def test_basic_integration(start_containers, config):
 
     requests.post(f"http://localhost:{config['fhir_server']['port']}/fhir", json=test_availability_report)
 
-    os.makedirs("tmp", exist_ok=True)
+    os.makedirs("tmp/input_dir", exist_ok=True)
     shutil.copy("resources/stratum-to-context.json", "tmp/input_dir/stratum-to-context.json")
 
     result = subprocess.run(
         [
-            "python", "../src/py/generate_availability.py",  # Replace with your script's filename
+            "python3", "../src/py/generate_availability.py",  # Replace with your script's filename
             "--onto-repo", config['onto']['repo'],
             "--onto-git-tag", config['onto']['tag'],
-            "--update-ontology"
+            "--update-ontology",
             "--ontology-dir", "./tmp/elastic_ontology",
             "--availability-master-ident", "fdpg-data-availability-report-obfuscated",
             "--availability-input-dir", "./tmp/input_dir",

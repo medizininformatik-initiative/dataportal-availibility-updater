@@ -7,4 +7,4 @@ elastic:
   port: "9200"
 onto:
   repo: "https://github.com/medizininformatik-initiative/fhir-ontology-generator/releases/download"
-  tag: "v3.0.2-alpha"
+  tag: "v4.3.0"
