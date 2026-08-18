@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.4.0] - 2026-08-18
+
+### Added
+
+- Added support for auth credentials (oauth2/basic auth) when fetching the ontology files
+- Run integration and unit tests in CI
+
+### Fixed
+
+- Fixed chunking error in elastic availability generator
+- Delete input dir on availability updater run
+- Upgrade to ontology 4.3.0
+- Fix resolving of MeasureReport url
+
 ## [0.3.0] - 2026-02-24
 
 ### Added
