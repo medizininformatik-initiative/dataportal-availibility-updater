@@ -74,15 +74,27 @@ class ElasticAvailabilityGenerator:
         buckets = (0, 10, 100, 1_000, 10_000, 100_000, 1_000_000)
         return max(b for b in buckets if value >= b)
 
-    def _accumulate_availability(self, node_id: str, cache: Dict[str, int]) -> int:
+    def _accumulate_availability(self, node_id: str, cache: Dict[str, int], in_progress: set = None) -> int:
         if node_id in cache:
             return cache[node_id]
+
+        if in_progress is None:
+            in_progress = set()
 
         node = self.es_tree[node_id]
         total = node["availability"]
 
+        in_progress.add(node_id)
         for child in node["children"]:
-            total += self._accumulate_availability(child["contextualized_termcode_hash"], cache)
+            child_id = child["contextualized_termcode_hash"]
+            if child_id not in self.es_tree:
+                log.debug("Missing ontology node for child %s of %s", child_id, node_id)
+                continue
+            if child_id in in_progress:
+                log.debug("Cycle detected: child %s of %s is already on the current path", child_id, node_id)
+                continue
+            total += self._accumulate_availability(child_id, cache, in_progress)
+        in_progress.discard(node_id)
 
         cache[node_id] = total
         return total

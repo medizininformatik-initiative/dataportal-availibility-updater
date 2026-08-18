@@ -1,9 +1,11 @@
 import argparse
 import json
 import logging
+import re
 import zipfile
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import urlparse
 import io
 from requests.auth import HTTPBasicAuth
 import tempfile
@@ -16,6 +18,16 @@ from elastic_availability_generator import ElasticAvailabilityGenerator
 log = logging.getLogger(__name__)
 
 PROJECT_IDENTIFIER_SYSTEM = "http://medizininformatik-initiative.de/sid/project-identifier"
+
+FHIR_REF = re.compile(r"(?:^|/)([A-Z][A-Za-z]{1,64}/[A-Za-z0-9\-.]{1,64}"
+                      r"(?:/_history/[A-Za-z0-9\-.]{1,64})?)/?$")
+
+
+def resolve(base: str, url: str) -> str:
+    m = FHIR_REF.search(urlparse(url).path or url)
+    if not m:
+        raise ValueError(f"unusable reference: {url!r}")
+    return f"{base.rstrip('/')}/{m.group(1)}"
 
 
 def get_combined_ca_bundle(custom_ca_path: Optional[str] = None) -> Optional[str]:
@@ -153,10 +165,10 @@ def download_availability_reports(
             log.warning("Skipping docref without MeasureReport URL")
             continue
 
-        full_url = f"{fhir_base_url}/{measure_url}?_format=json"
+        full_url = resolve(fhir_base_url, measure_url)
         log.debug("Downloading report %s", full_url)
 
-        report = session.get(full_url, timeout=60)
+        report = session.get(full_url, allow_redirects=False, params={"_format": "json"}, timeout=(5, 60))
         report.raise_for_status()
 
         outfile = input_dir / f"availability_report_{author}.json"
