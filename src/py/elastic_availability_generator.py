@@ -2,7 +2,7 @@ import json
 import logging
 import uuid
 from pathlib import Path
-from typing import Dict, Any, Iterable
+from typing import Dict, Any, Iterable, List
 
 log = logging.getLogger(__name__)
 
@@ -144,7 +144,7 @@ class ElasticAvailabilityGenerator:
 
                         self._apply_measure(context, termcode, score)
 
-    def _write_chunked(self, docs: Iterable[Dict[str, Any]], prefix: str) -> None:
+    def _write_chunked(self, records: Iterable[List[Dict[str, Any]]], prefix: str) -> None:
 
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -154,18 +154,20 @@ class ElasticAvailabilityGenerator:
 
         fh = (self.output_dir / f"{prefix}_{file_index}{self.FILE_EXTENSION}").open("w", encoding="utf-8")
 
-        for doc in docs:
-            line = json.dumps(doc, ensure_ascii=False) + "\n"
-            encoded = line.encode("utf-8")
+        for record in records:
+            lines = [json.dumps(doc, ensure_ascii=False) + "\n" for doc in record]
+            encoded = [line.encode("utf-8") for line in lines]
+            record_size = sum(len(chunk) for chunk in encoded)
 
-            if current_size + len(encoded) > max_bytes:
+            if current_size > 0 and current_size + record_size > max_bytes:
                 fh.close()
                 file_index += 1
                 fh = (self.output_dir / f"{prefix}_{file_index}{self.FILE_EXTENSION}").open("w", encoding="utf-8")
                 current_size = 0
 
-            fh.write(line)
-            current_size += len(encoded)
+            for line in lines:
+                fh.write(line)
+            current_size += record_size
 
         fh.close()
 
@@ -184,7 +186,6 @@ class ElasticAvailabilityGenerator:
             if total > 0:
                 log.debug("Node %s → %d (bucket %d)", node_id, total, bucket)
 
-            updates.append({"update": {"_id": node_id}})
-            updates.append({"doc": {"availability": bucket}})
+            updates.append([{"update": {"_id": node_id}}, {"doc": {"availability": bucket}}])
 
         self._write_chunked(updates, "es_availability_update")
