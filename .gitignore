@@ -5,3 +5,4 @@ elastic_ontology
 test/tmp
 dev-call.sh
 auth
+.DS_Store
