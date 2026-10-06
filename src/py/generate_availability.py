@@ -202,6 +202,10 @@ def update_availability_in_es(
     bulk_url = f"{es_base_url}/{es_index}/_bulk"
 
     for file in sorted(availability_dir.glob("*.json")):
+        if file.stat().st_size == 0:
+            log.warning("Skipping empty file %s", file.name)
+            continue
+
         log.info("Uploading %s", file.name)
 
         with file.open("rb") as fh:
