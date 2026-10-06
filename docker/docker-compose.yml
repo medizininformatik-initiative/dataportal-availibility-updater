@@ -29,7 +29,7 @@ services:
     volumes:
       - "./auth:/opt/availability-updater/auth"
   availability-report-store:
-    image: "samply/blaze:0.31"
+    image: "samply/blaze:1.11.0"
     environment:
       BASE_URL: ${AVAIL_REPORT_STORE:-http://availability-report-store:8080}
       JAVA_TOOL_OPTIONS: "-Xmx2g"
@@ -39,7 +39,7 @@ services:
     volumes:
       - "avail-report-store-data:/app/data"
   availability-dataportal-elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.5.4
     container_name: availability-dataportal-elastic
     ports:
       - '9200:9200'

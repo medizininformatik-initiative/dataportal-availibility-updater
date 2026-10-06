@@ -60,7 +60,7 @@ class ElasticAvailabilityGenerator:
         elastic_dir = self.ontology_dir / "elastic"
         intern = sys.intern
 
-        for file in elastic_dir.glob("*onto_es__ontology*"):
+        for file in elastic_dir.rglob("*onto_es__ontology*"):
             log.info("Loading ontology file %s", file)
 
             current_id = None
@@ -76,6 +76,9 @@ class ElasticAvailabilityGenerator:
                     self.availability[current_id] = 0
                     children = [intern(child["contextualized_termcode_hash"]) for child in obj.get("children", [])]
                     self.children[current_id] = children or None
+
+        if not self.availability:
+            raise RuntimeError(f"No ontology nodes found in {elastic_dir}")
 
         log.info("Loaded %d ontology nodes", len(self.availability))
 
